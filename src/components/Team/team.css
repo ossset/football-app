@@ -1,0 +1,45 @@
+.team__container {
+    width: 30%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 0 auto;
+    grid-gap: 15px;
+}
+
+.team__selector {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    width: 585px;
+    height: 60px;
+    text-align: center;
+    position: relative;
+    margin: 50px auto;
+    cursor: pointer;
+    line-height: 30px;
+    padding-left: 2rem;
+    box-sizing: border-box;
+}
+
+.team__selector::after {
+    content: ">";
+    display: inline-block;
+    background: white;
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    z-index: 2;
+    width: 30px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    border: 2px solid #ddd;
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+
+.selector__container {
+    position: relative;
+}

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Blinker&display=swap');
+
+body {
+    font-family: 'Blinker', sans-serif;
+}
+
+.nav__bar {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 20px 100px;
+    background-color: #3e4369;
+    color: #fff;
+}
+
+.nav__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login__wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login__wrapper * {
+    margin-left: 30px;
+}
+
+.nav__title {
+    font-family: 'Blinker', sans-serif;
+    font-size: 25px;
+}
+
+.btn {
+    width: 100px;
+    height: 35px;
+    background: rgba(73, 155, 234, 1);
+    background: -moz-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(34, 221, 227, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73, 155, 234, 1)), color-stop(100%, rgba(34, 221, 227, 1)));
+    background: -webkit-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(34, 221, 227, 1) 100%);
+    background: -o-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(34, 221, 227, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(73, 155, 234, 1) 0%, rgba(34, 221, 227, 1) 100%);
+    background: linear-gradient(to right, rgba(73, 155, 234, 1) 0%, rgba(34, 221, 227, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#22dde3', GradientType=1);
+    background-size: 200px 200px;
+
+    border: 0;
+    color: #fff;
+    border-radius: 25px;
+    outline: none;
+    font-family: 'Blinker', sans-serif;
+    transition: .2s ease-in-out;
+}
+
+.btn:hover {
+    background-position-x: -100px;
+}
+
+.nav__text {
+    padding-top: 7px;
+}
