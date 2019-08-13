@@ -11,9 +11,12 @@ class Nav extends Component {
     return (
       <nav className="nav__bar">
         <ul className="nav__list">
-          <li className="nav__title">Football Statistics</li>
+          <Link to="/">
+            <li className="nav__title">Football Statistics</li>
+          </Link>
+
           <li>
-            <Link to="/table">
+            <Link to="/table/PL">
               <button type="button" className="btn">
                 table
               </button>

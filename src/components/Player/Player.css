@@ -1,0 +1,23 @@
+.player__card {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #3e4369;
+    padding: 7px;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.player__img {
+    width: 100px;
+    height: 100px;
+    background: url(https://image.flaticon.com/icons/svg/286/286964.svg);
+    text-align: center;
+    font-size: 25px;
+    padding-top: 30px;
+}
+
+.player__name {
+    margin: 5px 0;
+}

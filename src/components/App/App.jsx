@@ -4,6 +4,7 @@ import Nav from '../Nav/Nav';
 import LeagueTable from '../LeagueTable/LeagueTable';
 import Team from '../Team/Team';
 import LeagueTabButton from '../LeagueTabButton/LeagueTabButton';
+import TeamPage from '../TeamPage/TeamPage';
 
 class App extends React.Component {
   // state = {
@@ -32,31 +33,9 @@ class App extends React.Component {
         <div>
           <Nav openTable={this.openTable} openTeam={this.openTeam} />
 
-          <Route
-            path="/table"
-            render={() => (
-              <div className="tab">
-                <Link to="/table/PL">
-                  <LeagueTabButton leagueName="English" />
-                </Link>
-                <Link to="/table/BL1">
-                  <LeagueTabButton leagueName="German" />
-                </Link>
-                <Link to="/table/PD">
-                  <LeagueTabButton leagueName="Spanish" />
-                </Link>
-                <Link to="/table/SA">
-                  <LeagueTabButton leagueName="Italian" />
-                </Link>
-                <Link to="/table/FL1">
-                  <LeagueTabButton leagueName="French" />
-                </Link>
-              </div>
-            )}
-          />
-
-          <Route path="/table/:id" component={LeagueTable} />
-          <Route path="/teams" component={Team} />
+          <Route path="/table/:id?" component={LeagueTable} />
+          <Route path="/teams" exact component={Team} />
+          <Route path="/teams/:name" component={TeamPage} />
         </div>
       </Router>
     );

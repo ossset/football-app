@@ -1,40 +1,43 @@
 import React, { Component } from 'react';
 import './LeagueTable.css';
-import { runInContext } from 'vm';
+import { Link } from 'react-router-dom';
 import LeagueTabButton from '../LeagueTabButton/LeagueTabButton';
 
 class LeagueTable extends Component {
   state = {
-    // leagueID: 'PL',
     leagueData: null
   };
 
   componentDidMount() {
-    const { match } = this.props;
+    const { match, history } = this.props;
     // const { leagueData } = this.state;
-    // console.log(match.params.id);
+    console.log(this.props);
     // !XHR
     const request = new XMLHttpRequest();
-
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          leagueData: data
-        });
-      }
-    };
-    request.open(
-      'GET',
-      `https://api.football-data.org/v2/competitions/${match.params.id}/standings`
-    );
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
+    const competitionID = match.params.id;
+    if (match.params.id) {
+      request.onreadystatechange = () => {
+        let data = {};
+        if (request.readyState === 4 && request.status === 200) {
+          const response = request.responseText;
+          data = JSON.parse(response);
+          this.setState({
+            leagueData: data
+          });
+        }
+      };
+      request.open(
+        'GET',
+        `https://api.football-data.org/v2/competitions/${competitionID}/standings`
+      );
+      request.setRequestHeader(
+        'X-Auth-Token',
+        '5c2a8c8a545448b0b0973ef8fb86f209'
+      );
+      request.send();
+    } else {
+      history.replace('/table/PL');
+    }
     //! XHR
     // const getData = async ID => {
     //   const url = `https://api.football-data.org/v2/competitions/${ID}/standings`;
@@ -106,26 +109,21 @@ class LeagueTable extends Component {
     return (
       <div>
         <div className="tab">
-          <LeagueTabButton
-            leagueName="English"
-            onClick={this.getLeagueData('PL')}
-          />
-          <LeagueTabButton
-            leagueName="German"
-            onClick={this.getLeagueData('BL1')}
-          />
-          <LeagueTabButton
-            leagueName="Spanish"
-            onClick={this.getLeagueData('PD')}
-          />
-          <LeagueTabButton
-            leagueName="Italian"
-            onClick={this.getLeagueData('SA')}
-          />
-          <LeagueTabButton
-            leagueName="French"
-            onClick={this.getLeagueData('FL1')}
-          />
+          <Link to="/table/PL">
+            <LeagueTabButton leagueName="English" />
+          </Link>
+          <Link to="/table/BL1">
+            <LeagueTabButton leagueName="German" />
+          </Link>
+          <Link to="/table/PD">
+            <LeagueTabButton leagueName="Spanish" />
+          </Link>
+          <Link to="/table/SA">
+            <LeagueTabButton leagueName="Italian" />
+          </Link>
+          <Link to="/table/FL1">
+            <LeagueTabButton leagueName="French" />
+          </Link>
         </div>
         {leagueData && (
           <table className="">

@@ -1,5 +1,6 @@
 import React from 'react';
 import './team.css';
+import { Link } from 'react-router-dom';
 import TeamSelector from '../TeamSelector/TeamSelector';
 import TeamCard from '../TeamCard/TeamCard';
 
@@ -71,11 +72,13 @@ class Team extends React.Component {
         <div className="team__container">
           {teamData &&
             teamData.teams.map(item => (
-              <TeamCard
-                img={item.crestUrl}
-                title={item.name}
-                text={item.shortName}
-              />
+              <Link to={`/teams/${item.id}`}>
+                <TeamCard
+                  img={item.crestUrl}
+                  title={item.name}
+                  text={item.shortName}
+                />
+              </Link>
             ))}
         </div>
       </div>
