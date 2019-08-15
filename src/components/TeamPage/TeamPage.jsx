@@ -77,16 +77,20 @@ class TeamPage extends React.Component {
           </div>
           <div className="team__buttons">
             <Link to={`/teams/${match.params.name}/players`}>
-              <button className="btn">players</button>
+              <button type="button" className="btn">
+                players
+              </button>
             </Link>
             <Link to={`/teams/${match.params.name}/fixtures`}>
-              <button className="btn">fixtures</button>
+              <button type="button" className="btn">
+                fixtures
+              </button>
             </Link>
           </div>
           <div className="team__players">
             <Route
               path="/teams/:id/players"
-              render={() => <Players team={teamData.squad} />}
+              render={() => <Players data={teamData.squad} />}
             />
           </div>
         </div>

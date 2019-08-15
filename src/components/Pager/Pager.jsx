@@ -1,39 +1,73 @@
 import React from 'react';
 
 class Pager extends React.Component {
-  state = {};
+  componentDidMount() {
+    const { page } = this.props;
+    console.log(page);
+  }
 
-  createSelect = count => {
+  createSelect = () => {
+    const { itemsOnPage, data } = this.props;
     const select = [];
-    for (let i = 0; i < Math.ceil(count / 5); i++) {
+    for (let i = 0; i < Math.ceil(data.length / itemsOnPage); i += 1) {
       select.push(i + 1);
     }
     return select;
   };
 
+  goToFirstPage = () => {
+    const { setPageNumber, page } = this.props;
+    console.log(page);
+    setPageNumber(1);
+  };
+
+  goToLastPage = () => {
+    const optionsValue = this.createSelect();
+    const { setPageNumber, page } = this.props;
+    setPageNumber(optionsValue.length);
+    console.log(page);
+  };
+
+  goToNextPage = () => {
+    const { page, setPageNumber } = this.props;
+    const optionsValue = this.createSelect();
+    return page >= optionsValue.length
+      ? setPageNumber(page)
+      : setPageNumber(page + 1);
+  };
+
+  goToPrevPage = () => {
+    const { page, setPageNumber } = this.props;
+    setPageNumber(page - 1);
+    return page <= 1 ? setPageNumber(page) : setPageNumber(page - 1);
+  };
+
+  selectPageNumber = e => {
+    const { setPageNumber } = this.props;
+    setPageNumber(+e.target.value);
+  };
+
   render() {
-    const { updateCard, count, getCard, team, changeCard } = this.props;
-    const select = this.createSelect(count);
+    const { data, page, setPageNumber } = this.props;
+    const optionsValue = this.createSelect();
+
     return (
       <div>
-        <select onChange={getCard} value={team}>
-          {select.map(item => (
+        <select onChange={this.selectPageNumber} value={page}>
+          {optionsValue.map(item => (
             <option>{item}</option>
           ))}
         </select>
-        <button type="button" onClick={() => updateCard(1)}>
+        <button type="button" onClick={this.goToFirstPage}>
           first
         </button>
-        <button type="button" onClick={() => changeCard(team <= 1 ? 0 : -1)}>
+        <button type="button" onClick={this.goToPrevPage}>
           prev
         </button>
-        <button
-          type="button"
-          onClick={() => changeCard(team >= select.length ? 0 : 1)}
-        >
+        <button type="button" onClick={this.goToNextPage}>
           next
         </button>
-        <button type="button" onClick={() => updateCard(select.length)}>
+        <button type="button" onClick={this.goToLastPage}>
           last
         </button>
       </div>
