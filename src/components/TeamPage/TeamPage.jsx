@@ -2,6 +2,7 @@ import React from 'react';
 import './TeamPage.css';
 import { Route, Link } from 'react-router-dom';
 import Players from '../Players/Players';
+import FixturePage from '../FixturePage/FixturePage';
 
 class TeamPage extends React.Component {
   state = {
@@ -57,7 +58,6 @@ class TeamPage extends React.Component {
   render() {
     const { match } = this.props;
     const { teamData } = this.state;
-    console.log(teamData);
     return (
       teamData && (
         <div className="team__page">
@@ -92,6 +92,9 @@ class TeamPage extends React.Component {
               path="/teams/:id/players"
               render={() => <Players data={teamData.squad} />}
             />
+          </div>
+          <div className="fixtures">
+            <Route path="/teams/:id/fixtures" component={FixturePage} />
           </div>
         </div>
       )
