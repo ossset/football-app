@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import LeagueTable from '../LeagueTable/LeagueTable';
 import Team from '../Team/Team';
-import LeagueTabButton from '../LeagueTabButton/LeagueTabButton';
 import TeamPage from '../TeamPage/TeamPage';
 
 class App extends React.Component {

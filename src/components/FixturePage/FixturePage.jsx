@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ListWithPager from '../ListWithPager/ListWithPager';
 import FixtureCard from '../FixtureCard/FixtureCard';
 import './FixturePage.css';
@@ -12,14 +13,11 @@ class FixturePage extends React.Component {
   };
 
   componentDidMount() {
-    const { match } = this.props;
-    const { id } = match.params;
     this.getFixtureData();
   }
 
   setDateFrom = e => {
     e.preventDefault();
-    console.log(e.target.value);
     this.setState({
       dateFrom: e.target.value
     });
@@ -27,7 +25,6 @@ class FixturePage extends React.Component {
 
   setDateTo = e => {
     e.preventDefault();
-    console.log(e.target.value);
     this.setState({
       dateTo: e.target.value
     });
@@ -43,7 +40,6 @@ class FixturePage extends React.Component {
       if (request.readyState === 4 && request.status === 200) {
         const response = request.responseText;
         data = JSON.parse(response);
-        console.log(data);
         this.setState({
           fixtureData: data
         });
@@ -71,7 +67,6 @@ class FixturePage extends React.Component {
       if (request.readyState === 4 && request.status === 200) {
         const response = request.responseText;
         data = JSON.parse(response);
-        console.log(data);
         this.setState({
           fixtureData: data
         });
@@ -95,7 +90,6 @@ class FixturePage extends React.Component {
       if (request.readyState === 4 && request.status === 200) {
         const response = request.responseText;
         data = JSON.parse(response);
-        console.log(data);
         this.setState({
           detailsItem: data
         });
@@ -121,7 +115,7 @@ class FixturePage extends React.Component {
           <div className="fixture__container">
             <form
               className="fixture__form"
-              onSubmit={() => this.getFilteredData()}
+              onSubmit={e => this.getFilteredData(e)}
             >
               <input type="date" onChange={this.setDateFrom} />
               <input type="date" onChange={this.setDateTo} />
@@ -132,6 +126,7 @@ class FixturePage extends React.Component {
               itemsOnPage={5}
               render={item => (
                 <FixtureCard
+                  key={item.id}
                   fixture={item}
                   onClick={id => this.showDetais(id)}
                 />
@@ -139,7 +134,7 @@ class FixturePage extends React.Component {
             />
           </div>
           {detailsItem && (
-            <div className="fixture__card">
+            <div className="fixture__card--details">
               <p>
                 {`${detailsItem.match.homeTeam.name} - ${detailsItem.match.awayTeam.name} / ${detailsItem.match.score.fullTime.homeTeam} - ${detailsItem.match.score.fullTime.awayTeam}`}
               </p>
@@ -154,5 +149,13 @@ class FixturePage extends React.Component {
     );
   }
 }
+
+FixturePage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }).isRequired
+};
 
 export default FixturePage;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './LeagueTable.css';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import LeagueTabButton from '../LeagueTabButton/LeagueTabButton';
 
 class LeagueTable extends Component {
@@ -10,9 +11,6 @@ class LeagueTable extends Component {
 
   componentDidMount() {
     const { match, history } = this.props;
-    // const { leagueData } = this.state;
-    console.log(this.props);
-    // !XHR
     const request = new XMLHttpRequest();
     const competitionID = match.params.id;
     if (match.params.id) {
@@ -38,20 +36,6 @@ class LeagueTable extends Component {
     } else {
       history.replace('/table/PL');
     }
-    //! XHR
-    // const getData = async ID => {
-    //   const url = `https://api.football-data.org/v2/competitions/${ID}/standings`;
-    //   const apiUrl = await fetch(url, {
-    //     headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
-    //     type: 'GET',
-    //     dataType: 'json'
-    //   });
-    //   const data = await apiUrl.json();
-    //   this.setState({
-    //     leagueData: data
-    //   });
-    // };
-    // getData(leagueID);
   }
 
   componentDidUpdate(prevProps) {
@@ -60,26 +44,9 @@ class LeagueTable extends Component {
     if (match.params.id !== prevMatch.params.id) {
       this.getLeagueData(match.params.id);
     }
-    console.log('component did update');
   }
 
-  // getLeagueData = leagueID => async e => {
-  //   e.preventDefault();
-  //   const url = `https://api.football-data.org/v2/competitions/${leagueID}/standings`;
-  //   const apiUrl = await fetch(url, {
-  //     headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
-  //     type: 'GET',
-  //     dataType: 'json'
-  //   });
-  //   const data = await apiUrl.json();
-  //   this.setState({
-  //     leagueData: data
-  //   });
-  // };
-
-  //! XHR
   getLeagueData = leagueID => {
-    // e.preventDefault();
     const request = new XMLHttpRequest();
     const url = `https://api.football-data.org/v2/competitions/${leagueID}/standings`;
 
@@ -91,7 +58,6 @@ class LeagueTable extends Component {
         this.setState({
           leagueData: data
         });
-        console.log(`происходит setState в getLeagueData c ${leagueID}`);
       }
     };
     request.open('GET', url);
@@ -100,9 +66,7 @@ class LeagueTable extends Component {
       '5c2a8c8a545448b0b0973ef8fb86f209'
     );
     request.send();
-    console.log('вызывается метод getLeagueData');
   };
-  //! XHR
 
   render() {
     const { leagueData } = this.state;
@@ -140,7 +104,7 @@ class LeagueTable extends Component {
                 <th>P</th>
               </tr>
               {leagueData.standings[0].table.map(item => (
-                <tr>
+                <tr key={item.team.id}>
                   <td>
                     <p>{item.position}</p>
                   </td>
@@ -177,5 +141,16 @@ class LeagueTable extends Component {
     );
   }
 }
+
+LeagueTable.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }).isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func
+  }).isRequired
+};
 
 export default LeagueTable;

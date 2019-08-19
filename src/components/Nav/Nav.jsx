@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import './Nav.css';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Nav extends Component {
   state = {};
 
   render() {
-    // const { openTable, openTeam } = this.props;
     return (
       <nav className="nav__bar">
         <ul className="nav__list">
@@ -44,9 +43,5 @@ class Nav extends Component {
     );
   }
 }
-// Nav.propTypes = {
-//   openTable: PropTypes.func.isRequired,
-//   openTeam: PropTypes.func.isRequired
-// };
 
 export default Nav;

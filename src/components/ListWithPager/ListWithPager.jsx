@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Pager from '../Pager/Pager';
 
 class ListWithPager extends React.Component {
@@ -26,5 +27,11 @@ class ListWithPager extends React.Component {
     );
   }
 }
+
+ListWithPager.propTypes = {
+  data: PropTypes.instanceOf(Array).isRequired,
+  render: PropTypes.func.isRequired,
+  itemsOnPage: PropTypes.number.isRequired
+};
 
 export default ListWithPager;

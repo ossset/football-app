@@ -1,6 +1,7 @@
 import React from 'react';
 import './TeamPage.css';
 import { Route, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Players from '../Players/Players';
 import FixturePage from '../FixturePage/FixturePage';
 
@@ -32,28 +33,6 @@ class TeamPage extends React.Component {
     );
     request.send();
   }
-
-  // getTeamData = name => {
-  //   const request = new XMLHttpRequest();
-  //   const url = `https://api.football-data.org/v2/teams/${name}`;
-
-  //   request.onreadystatechange = () => {
-  //     let data = {};
-  //     if (request.readyState === 4 && request.status === 200) {
-  //       const response = request.responseText;
-  //       data = JSON.parse(response);
-  //       this.setState({
-  //         teamData: data
-  //       });
-  //     }
-  //   };
-  //   request.open('GET', url);
-  //   request.setRequestHeader(
-  //     'X-Auth-Token',
-  //     '5c2a8c8a545448b0b0973ef8fb86f209'
-  //   );
-  //   request.send();
-  // };
 
   render() {
     const { match } = this.props;
@@ -101,5 +80,13 @@ class TeamPage extends React.Component {
     );
   }
 }
+
+TeamPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      name: PropTypes.string
+    })
+  }).isRequired
+};
 
 export default TeamPage;

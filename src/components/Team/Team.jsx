@@ -23,21 +23,6 @@ class Team extends React.Component {
     this.getTeamData(e.target.value);
   };
 
-  // getTeamData = async league => {
-  //   // e.preventDefault();
-  //   const url = `https://api.football-data.org/v2/competitions/${league}/teams`;
-  //   const apiUrl = await fetch(url, {
-  //     headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
-  //     type: 'GET',
-  //     dataType: 'json'
-  //   });
-  //   const data = await apiUrl.json();
-  //   // const teams = data.teams.map(item => item.name);
-  //   this.setState({
-  //     teamData: data
-  //   });
-  // };
-  //! xhr
   getTeamData = league => {
     const request = new XMLHttpRequest();
     const url = `https://api.football-data.org/v2/competitions/${league}/teams`;
@@ -60,7 +45,6 @@ class Team extends React.Component {
     request.send();
   };
 
-  //! xhr
   render() {
     const { teamData, currentLeague } = this.state;
     return (
@@ -72,7 +56,7 @@ class Team extends React.Component {
         <div className="team__container">
           {teamData &&
             teamData.teams.map(item => (
-              <Link to={`/teams/${item.id}`}>
+              <Link key={item.id} to={`/teams/${item.id}`}>
                 <TeamCard
                   img={item.crestUrl}
                   title={item.name}

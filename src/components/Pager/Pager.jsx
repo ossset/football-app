@@ -1,11 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Pager extends React.Component {
-  componentDidMount() {
-    const { page } = this.props;
-    console.log(page);
-  }
-
   createSelect = () => {
     const { itemsOnPage, data } = this.props;
     const select = [];
@@ -16,16 +12,14 @@ class Pager extends React.Component {
   };
 
   goToFirstPage = () => {
-    const { setPageNumber, page } = this.props;
-    console.log(page);
+    const { setPageNumber } = this.props;
     setPageNumber(1);
   };
 
   goToLastPage = () => {
     const optionsValue = this.createSelect();
-    const { setPageNumber, page } = this.props;
+    const { setPageNumber } = this.props;
     setPageNumber(optionsValue.length);
-    console.log(page);
   };
 
   goToNextPage = () => {
@@ -48,14 +42,14 @@ class Pager extends React.Component {
   };
 
   render() {
-    const { data, page, setPageNumber } = this.props;
+    const { page } = this.props;
     const optionsValue = this.createSelect();
 
     return (
       <div>
         <select onChange={this.selectPageNumber} value={page}>
           {optionsValue.map(item => (
-            <option>{item}</option>
+            <option key={item}>{item}</option>
           ))}
         </select>
         <button type="button" onClick={this.goToFirstPage}>
@@ -74,5 +68,15 @@ class Pager extends React.Component {
     );
   }
 }
+
+Pager.propTypes = {
+  setPageNumber: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  // data: PropTypes.shape({
+  //   length: PropTypes.number
+  // }).isRequired,
+  itemsOnPage: PropTypes.number.isRequired,
+  data: PropTypes.instanceOf(Array).isRequired
+};
 
 export default Pager;

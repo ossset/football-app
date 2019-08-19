@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Player.css';
 
 const Player = props => {
@@ -16,6 +17,15 @@ const Player = props => {
       <div className="player__img">{player.shirtNumber}</div>
     </div>
   );
+};
+
+Player.propTypes = {
+  player: PropTypes.shape({
+    dateOfBirth: PropTypes.string,
+    name: PropTypes.string,
+    position: PropTypes.string,
+    shirtNumber: PropTypes.number
+  }).isRequired
 };
 
 export default Player;
