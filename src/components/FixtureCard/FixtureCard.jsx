@@ -6,25 +6,24 @@ const FixtureCard = props => {
   const { fixture, onClick } = props;
   const date = new Date(fixture.utcDate);
 
-  return fixture.status === 'FINISHED' ? (
+  return (
     <button
       key={fixture.id}
       type="button"
       onClick={() => onClick(fixture.id)}
       className="fixture__card"
     >
-      <p className="card__title">{`${fixture.awayTeam.name} - ${fixture.homeTeam.name}  ${fixture.score.fullTime.awayTeam} - ${fixture.score.fullTime.homeTeam}`}</p>
-      <p className="card__date">{date.toDateString()}</p>
-    </button>
-  ) : (
-    <button
-      key={fixture.id}
-      className="fixture__card"
-      type="button"
-      onClick={() => onClick(fixture.id)}
-    >
-      <p className="card__title">{`${fixture.awayTeam.name} - ${fixture.homeTeam.name}`}</p>
-      <p className="card__date">{date.toDateString()}</p>
+      {fixture.status === 'FINISHED' ? (
+        <div>
+          <p className="card__title">{`${fixture.awayTeam.name} - ${fixture.homeTeam.name}  ${fixture.score.fullTime.awayTeam} - ${fixture.score.fullTime.homeTeam}`}</p>
+          <p className="card__date">{date.toDateString()}</p>
+        </div>
+      ) : (
+        <div>
+          <p className="card__title">{`${fixture.awayTeam.name} - ${fixture.homeTeam.name}`}</p>
+          <p className="card__date">{date.toDateString()}</p>
+        </div>
+      )}
     </button>
   );
 };
