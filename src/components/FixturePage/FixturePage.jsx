@@ -6,8 +6,8 @@ import './FixturePage.css';
 
 class FixturePage extends React.Component {
   state = {
-    fixtureData: null,
     detailsItem: null,
+    fixtureData: null,
     dateFrom: '',
     dateTo: ''
   };
@@ -30,77 +30,51 @@ class FixturePage extends React.Component {
     });
   };
 
-  getFixtureData = () => {
+  getFixtureData = async () => {
     const { match } = this.props;
     const { id } = match.params;
     const { dateFrom, dateTo } = this.state;
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          fixtureData: data
-        });
-      }
-    };
-    request.open(
-      'GET',
-      `https://api.football-data.org/v2/teams/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`
-    );
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
+    const url = `https://api.football-data.org/v2/teams/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
+    const apiUrl = await fetch(url, {
+      headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+      type: 'GET',
+      dataType: 'json'
+    });
+    const data = await apiUrl.json();
+    this.setState({
+      fixtureData: data
+    });
   };
 
-  getFilteredData = e => {
+  getFilteredData = async e => {
     e.preventDefault();
     const { match } = this.props;
     const { id } = match.params;
     const { dateFrom, dateTo } = this.state;
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          fixtureData: data
-        });
-      }
-    };
-    request.open(
-      'GET',
-      `https://api.football-data.org/v2/teams/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`
-    );
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
+    const url = `https://api.football-data.org/v2/teams/${id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
+    const apiUrl = await fetch(url, {
+      headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+      type: 'GET',
+      dataType: 'json'
+    });
+    const data = await apiUrl.json();
+    this.setState({
+      fixtureData: data
+    });
   };
 
-  showDetais = id => {
-    const request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          detailsItem: data
-        });
-      }
-    };
-    request.open('GET', `https://api.football-data.org/v2/matches/${id}`);
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
+  showDetails = async id => {
+    let data = {};
+    const url = `https://api.football-data.org/v2/matches/${id}`;
+    const apiUrl = await fetch(url, {
+      headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+      type: 'GET',
+      dataType: 'json'
+    });
+    data = await apiUrl.json();
+    this.setState({
+      detailsItem: data
+    });
   };
 
   render() {
@@ -128,7 +102,7 @@ class FixturePage extends React.Component {
                 <FixtureCard
                   key={item.id}
                   fixture={item}
-                  onClick={id => this.showDetais(id)}
+                  onClick={id => this.showDetails(id)}
                 />
               )}
             />

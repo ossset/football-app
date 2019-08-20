@@ -11,28 +11,23 @@ class TeamPage extends React.Component {
   };
 
   componentDidMount() {
+    this.getTeamData();
+  }
+
+  getTeamData = async () => {
     const { match } = this.props;
     const { name } = match.params;
-    const request = new XMLHttpRequest();
     const url = `https://api.football-data.org/v2/teams/${name}`;
-
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          teamData: data
-        });
-      }
-    };
-    request.open('GET', url);
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
-  }
+    const apiUrl = await fetch(url, {
+      headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+      type: 'GET',
+      dataType: 'json'
+    });
+    const data = await apiUrl.json();
+    this.setState({
+      teamData: data
+    });
+  };
 
   render() {
     const { match } = this.props;

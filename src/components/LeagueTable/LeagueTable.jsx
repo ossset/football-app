@@ -10,32 +10,7 @@ class LeagueTable extends Component {
   };
 
   componentDidMount() {
-    const { match, history } = this.props;
-    const request = new XMLHttpRequest();
-    const competitionID = match.params.id;
-    if (match.params.id) {
-      request.onreadystatechange = () => {
-        let data = {};
-        if (request.readyState === 4 && request.status === 200) {
-          const response = request.responseText;
-          data = JSON.parse(response);
-          this.setState({
-            leagueData: data
-          });
-        }
-      };
-      request.open(
-        'GET',
-        `https://api.football-data.org/v2/competitions/${competitionID}/standings`
-      );
-      request.setRequestHeader(
-        'X-Auth-Token',
-        '5c2a8c8a545448b0b0973ef8fb86f209'
-      );
-      request.send();
-    } else {
-      history.replace('/table/PL');
-    }
+    this.getCompetitionData();
   }
 
   componentDidUpdate(prevProps) {
@@ -46,26 +21,36 @@ class LeagueTable extends Component {
     }
   }
 
-  getLeagueData = leagueID => {
-    const request = new XMLHttpRequest();
-    const url = `https://api.football-data.org/v2/competitions/${leagueID}/standings`;
+  getCompetitionData = async () => {
+    const { match, history } = this.props;
+    const competitionID = match.params.id;
+    const url = `https://api.football-data.org/v2/competitions/${competitionID}/standings`;
+    if (match.params.id) {
+      const apiUrl = await fetch(url, {
+        headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+        type: 'GET',
+        dataType: 'json'
+      });
+      const data = await apiUrl.json();
+      this.setState({
+        leagueData: data
+      });
+    } else {
+      history.replace('/table/PL');
+    }
+  };
 
-    request.onreadystatechange = () => {
-      let data = {};
-      if (request.readyState === 4 && request.status === 200) {
-        const response = request.responseText;
-        data = JSON.parse(response);
-        this.setState({
-          leagueData: data
-        });
-      }
-    };
-    request.open('GET', url);
-    request.setRequestHeader(
-      'X-Auth-Token',
-      '5c2a8c8a545448b0b0973ef8fb86f209'
-    );
-    request.send();
+  getLeagueData = async leagueID => {
+    const url = `https://api.football-data.org/v2/competitions/${leagueID}/standings`;
+    const apiUrl = await fetch(url, {
+      headers: { 'X-Auth-Token': '5c2a8c8a545448b0b0973ef8fb86f209' },
+      type: 'GET',
+      dataType: 'json'
+    });
+    const data = await apiUrl.json();
+    this.setState({
+      leagueData: data
+    });
   };
 
   render() {
