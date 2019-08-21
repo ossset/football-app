@@ -6,7 +6,7 @@ import './FixturePage.css';
 
 class FixturePage extends React.Component {
   state = {
-    detailsItem: null,
+    // fixtureDetails: null
     fixtureData: null,
     dateFrom: '',
     dateTo: ''
@@ -72,16 +72,18 @@ class FixturePage extends React.Component {
       dataType: 'json'
     });
     data = await apiUrl.json();
-    this.setState({
-      detailsItem: data
-    });
+    // this.setState({
+    //   fixtureDetails: data
+    // });
+    this.props.setFixtureDetails(data);
   };
 
   render() {
-    const { fixtureData, detailsItem } = this.state;
+    const { fixtureData } = this.state;
+    const { fixtureDetails } = this.props;
     let date = {};
-    if (detailsItem) {
-      date = new Date(detailsItem.match.utcDate);
+    if (fixtureDetails) {
+      date = new Date(fixtureDetails.match.utcDate);
     }
     return (
       fixtureData && (
@@ -107,15 +109,15 @@ class FixturePage extends React.Component {
               )}
             />
           </div>
-          {detailsItem && (
+          {fixtureDetails && (
             <div className="fixture__card--details">
               <p>
-                {`${detailsItem.match.homeTeam.name} - ${detailsItem.match.awayTeam.name} / ${detailsItem.match.score.fullTime.homeTeam} - ${detailsItem.match.score.fullTime.awayTeam}`}
+                {`${fixtureDetails.match.homeTeam.name} - ${fixtureDetails.match.awayTeam.name} / ${fixtureDetails.match.score.fullTime.homeTeam} - ${fixtureDetails.match.score.fullTime.awayTeam}`}
               </p>
               <p>{date.toDateString()}</p>
-              <p>{`${detailsItem.match.homeTeam.name} wins: ${detailsItem.head2head.homeTeam.wins} `}</p>
-              <p>{`${detailsItem.match.awayTeam.name} wins: ${detailsItem.head2head.awayTeam.wins} `}</p>
-              <p>{`Draws: ${detailsItem.head2head.homeTeam.draws}`}</p>
+              <p>{`${fixtureDetails.match.homeTeam.name} wins: ${fixtureDetails.head2head.homeTeam.wins} `}</p>
+              <p>{`${fixtureDetails.match.awayTeam.name} wins: ${fixtureDetails.head2head.awayTeam.wins} `}</p>
+              <p>{`Draws: ${fixtureDetails.head2head.homeTeam.draws}`}</p>
             </div>
           )}
         </div>
@@ -125,10 +127,31 @@ class FixturePage extends React.Component {
 }
 
 FixturePage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string
-    })
+  fixtureDetails: PropTypes.shape({
+    head2head: PropTypes.shape({
+      homeTeam: PropTypes.shape({
+        draws: PropTypes.string,
+        wins: PropTypes.string
+      }),
+      awayTeam: PropTypes.shape({
+        draws: PropTypes.string,
+        wins: PropTypes.string
+      })
+    }),
+    match: PropTypes.shape({
+      utcDate: PropTypes.string,
+      homeTeam: PropTypes.string,
+      awayTeam: PropTypes.string,
+      params: PropTypes.shape({
+        id: PropTypes.string
+      }),
+      score: PropTypes.shape({
+        fullTime: PropTypes.shape({
+          homeTeam: PropTypes.string,
+          awayTeam: PropTypes.string
+        })
+      })
+    }).isRequired
   }).isRequired
 };
 

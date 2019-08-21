@@ -6,27 +6,9 @@ import Team from '../Team/Team';
 import TeamPage from '../TeamPage/TeamPage';
 
 class App extends React.Component {
-  // state = {
-  //   table: false,
-  //   team: false
-  // };
   state = {};
-  // openTable = () => {
-  //   this.setState({
-  //     table: true,
-  //     team: false
-  //   });
-  // };
-
-  // openTeam = () => {
-  //   this.setState({
-  //     table: false,
-  //     team: true
-  //   });
-  // };
 
   render() {
-    // const { table, team } = this.state;
     return (
       <Router>
         <div>

@@ -3,7 +3,7 @@ import './TeamPage.css';
 import { Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Players from '../Players/Players';
-import FixturePage from '../FixturePage/FixturePage';
+import FixturesPageContainer from '../FixturePage/container';
 
 class TeamPage extends React.Component {
   state = {
@@ -68,7 +68,10 @@ class TeamPage extends React.Component {
             />
           </div>
           <div className="fixtures">
-            <Route path="/teams/:id/fixtures" component={FixturePage} />
+            <Route
+              path="/teams/:id/fixtures"
+              component={FixturesPageContainer}
+            />
           </div>
         </div>
       )
